@@ -1,0 +1,93 @@
+{% load custom_filters %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'comparer/styles.css' %}">    
+    <title>E-commerce Price Comparison Tool</title>
+    <script>
+        function showLoading() {
+            document.getElementById('loading-spinner').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-spinner').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>E-commerce Price Comparison Tool</h1>
+    </div>
+    <form method="post" action="{% url 'search' %}" onsubmit="showLoading()" style="max-width: 300px; margin: 0 auto; text-align: center;">
+        {% csrf_token %}
+        
+        <style>
+            /* Style the form inputs */
+            input[type="text"] {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+                margin-bottom: 10px;
+                font-family: 'Poppins', sans-serif;
+            }
+    
+            /* Style the submit button */
+            button {
+                background-color: #3498db;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-family: 'Poppins', sans-serif;
+            }
+    
+            /* Hover effect for the button */
+            button:hover {
+                background-color: #2980b9;
+            }
+
+            #loading-spinner {
+                display: none;
+                border: 8px solid #f3f3f3;
+                border-top: 8px solid #3498db;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                animation: spin 1s linear infinite;
+                margin: 20px auto;
+            }
+
+            /* Animation for the loading spinner */
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
+
+        </style>
+        <div id="loading-spinner"></div>
+    
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+
+    {% if search_results %}
+    <div style="text-align: center;">
+        <h1>Couldn't aggregate results for {{ search_results }} 😥</h1>
+    </div>
+    <div style="text-align: center;">
+        <h3>Please try a different search term </h3>
+    </div>
+
+    {% endif %}
+    
+
+</body>
+</html>

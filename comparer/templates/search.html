@@ -1,0 +1,202 @@
+{% load custom_filters %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'comparer/styles.css' %}">
+    <title>E-commerce Price Comparison Tool</title>
+
+    <style>
+        /* Style the form inputs */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Style the form inputs */
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        /* Style the submit button */
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Hover effect for the button */
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Loading spinner styles */
+        .loading-spinner-with-text {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading-spinner-with-text .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        .loading-spinner-with-text .text {
+            color: #3498db;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive styles */
+
+        /* Tablet styles */
+        @media (min-width: 600px) {
+            form {
+                max-width: 400px;
+            }
+        }
+
+        /* Laptop/Desktop styles */
+        @media (min-width: 1024px) {
+            form {
+                max-width: 600px;
+            }
+        }
+
+        /* Larger screens */
+        @media (min-width: 1200px) {
+            form {
+                max-width: 800px;
+            }
+        }
+    </style>
+
+
+</head>
+<body>
+
+    
+
+
+
+
+    <div style="text-align: center;">
+        <h1>E-commerce Price Comparison Tool</h1>
+    </div>
+    <form method="post" action="{% url 'search' %}" style="max-width: 300px; margin: 0 auto; text-align: center;">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <button type="submit" onclick="showLoading()">Search</button>
+        <div class="loading-spinner-with-text" id="loadingSpinnerWithText">
+            <div class="spinner"></div>
+            <div class="text">Crawling...</div>
+        </div>
+    </form>
+
+
+
+
+
+    {% if ebay_results %}
+    <div style="text-align: center;">
+        <h1>Results for {{ walmart_results.0.KW }} </h1>
+    </div>
+
+    {% for result in ebay_results %}
+
+        <div class="product-container">
+            <div class="image-container">
+                <img src="{{ result.Image_URLs }}" alt="{{ title.Title }}" class="product-image">
+            </div>
+            <div class="item-details">
+                <div class="item-title"><h3><strong>{{ result.Title }}</strong></h3></div>
+                <p class="item-price"><strong>Price:</strong> ${{ result.Price }}</p>
+                <p><strong>Seller Type:</strong> {{ result.Seller_Type }}</p>
+                <p><strong>Product link:</strong> <a href="{{ result.Product_Links }}" target="_blank">Link</a></p>
+                <p><strong>Source Site:</strong> {{ result.Website }} {% if result.Website == "www.ebay.com" %}<img src="{% static 'ebay_logo.png' %}" alt="ebay Logo" style="height: 50px; vertical-align: middle;">{% endif %} </p>
+            </div>
+        </div>
+
+
+    {% endfor %}
+
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% if walmart_results %}
+
+    {% for result in walmart_results %}
+
+        <div class="product-container">
+            <div class="image-container">
+                <img src="{{ result.Image_URLs }}" alt="{{ title.Title }}" class="product-image">
+            </div>
+            <div class="item-details">
+                <div class="item-title"><h3><strong>{{ result.Title }}</strong></h3></div>
+                <p class="item-price"><strong>Price:</strong> ${{ result.Price }}</p>
+                <p><strong>Seller Type:</strong> {{ result.Seller_Type }}</p>
+                <p><strong>Product link:</strong> <a href="{{ result.Product_Links }}" target="_blank">Link</a></p>
+                <p><strong>Source Site:</strong> {{ result.Website }} {% if result.Website == "www.walmart.com" %}<img src="{% static 'Walmart-Logo.png' %}" alt="walmart Logo" style="height: 50px; vertical-align: middle;">{% endif %} </p>
+            </div>
+        </div>
+
+
+
+
+
+
+
+    {% endfor %}
+
+  
+    {% endif %}
+
+    <script>
+        function showLoading() {
+            document.getElementById('loadingSpinnerWithText').style.display = 'block';
+        }
+    </script>
+    
+
+
+</body>
+</html>
