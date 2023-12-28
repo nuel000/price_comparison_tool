@@ -1,10 +1,9 @@
 from concurrent.futures import ThreadPoolExecutor
-import subprocess
 from django.shortcuts import render
 from .forms import SearchForm
 from scrappers.ebay import run_playwright as ebay_run_playwright
 from scrappers.walmart import run_playwright as walmart_run_playwright
-subprocess.run(["playwright", "install"])
+
 
 
 def search_view(request):
