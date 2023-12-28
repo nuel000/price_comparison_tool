@@ -1,4 +1,6 @@
+import subprocess
 from playwright.sync_api import Playwright, sync_playwright
+subprocess.run(["playwright", "install"])
 from bs4 import BeautifulSoup
 import pandas as pd
 import re
