@@ -26,6 +26,7 @@ def run_playwright(search_term):
         page.set_default_timeout(100000)
 
         page.goto(link)
+        page.set_default_timeout(100000)
         html = page.content()
         
         s = BeautifulSoup(html, 'html.parser')

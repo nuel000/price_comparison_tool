@@ -1,7 +1,8 @@
 import subprocess
-
+import time
 from playwright.sync_api import Playwright, sync_playwright
 subprocess.run(["playwright", "install"])
+time.sleep(3)
 from bs4 import BeautifulSoup
 import pandas as pd
 import re
@@ -24,6 +25,7 @@ def run_playwright(search_term):
         page.set_default_timeout(100000)
 
         page.goto(f"https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313&_nkw={modified_text}&_sacat=0")
+        page.set_default_timeout(100000)
         html = page.content()
         soup = BeautifulSoup(html, 'html.parser')
 
