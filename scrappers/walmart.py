@@ -13,14 +13,14 @@ def generate_walmart_search_url(search_term):
         url = "https://www.walmart.com/search?q=" + '+'.join(search_words)
         return url
 
-
+# executable_path = '/usr/bin/chromium', args = ['--disable-gpu'],ignore_default_args=["--mute-audio"], 
 def run_playwright(search_term):
     data_list = []
     
     link  = generate_walmart_search_url(search_term)
 
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(executable_path = '/usr/bin/chromium', args = ['--disable-gpu'],ignore_default_args=["--mute-audio"], headless = True)
+        browser = playwright.chromium.launch(headless = True)
         context = browser.new_context()
         page = context.new_page()
         page.set_default_timeout(100000)

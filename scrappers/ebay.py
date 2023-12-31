@@ -16,7 +16,7 @@ def run_playwright(search_term):
     modified_text = search_term.replace(" ", "+")
 
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(executable_path = '/usr/bin/chromium', args = ['--disable-gpu'],ignore_default_args=["--mute-audio"], headless = True)
+        browser = playwright.chromium.launch(headless = True)
         context = browser.new_context()
         page = context.new_page()
         page.set_default_timeout(100000)
