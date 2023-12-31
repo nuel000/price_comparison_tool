@@ -22,13 +22,15 @@ def search_view(request):
                     ebay_results = ebay_future.result()
                     # print('EBBAYYYY:::::::::::::;',ebay_results)
                 except Exception as ebay_error:
-                    ebay_results = 'No Results from Ebay'
+                    print('ERRRROR IS ::::',ebay_error )
+                    ebay_results = f'No Results from Ebay   {ebay_error}'
 
                 try:
                     walmart_results = walmart_future.result()
                     # print('WALMART:::::::::::::;',walmart_results)
                 except Exception as walmart_error:
-                    walmart_results = 'No results from walmart'
+                    print('ERRRROR IS ::::',walmart_error )
+                    walmart_results = f'No results from walmart   {walmart_error}'
 
                 return render(request, 'search.html', {'form': form, 'ebay_results': ebay_results, 'walmart_results': walmart_results})
 
