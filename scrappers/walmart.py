@@ -1,7 +1,7 @@
 import subprocess
 from playwright.sync_api import Playwright, sync_playwright
 subprocess.run(["playwright", "install"])
-
+time.sleep(15)
 
 from bs4 import BeautifulSoup
 import pandas as pd
