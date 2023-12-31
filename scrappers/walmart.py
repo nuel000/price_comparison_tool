@@ -1,4 +1,5 @@
 from playwright.sync_api import Playwright, sync_playwright
+sync_playwright().install()
 
 
 from bs4 import BeautifulSoup
