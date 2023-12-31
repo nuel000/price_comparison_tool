@@ -20,7 +20,7 @@ def run_playwright(search_term):
     link  = generate_walmart_search_url(search_term)
 
     with sync_playwright() as playwright:
-        browser = playwright.firefox.launch()
+        browser = playwright.chromium.launch(executable_path = '/usr/bin/chromium', args = ['--disable-gpu'],ignore_default_args=["--mute-audio"], headless = True)
         context = browser.new_context()
         page = context.new_page()
         page.set_default_timeout(100000)
