@@ -1,6 +1,6 @@
 import time
 from playwright.sync_api import Playwright, sync_playwright
-sync_playwright().install()
+from pyppeteer import launch
 from bs4 import BeautifulSoup
 import pandas as pd
 import re

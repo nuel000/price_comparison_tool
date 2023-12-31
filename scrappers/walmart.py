@@ -1,5 +1,5 @@
 from playwright.sync_api import Playwright, sync_playwright
-sync_playwright().install()
+from pyppeteer import launch
 
 
 from bs4 import BeautifulSoup
@@ -20,7 +20,9 @@ def run_playwright(search_term):
     
     link  = generate_walmart_search_url(search_term)
 
+
     with sync_playwright() as playwright:
+        
         browser = playwright.chromium.launch(headless = True)
         context = browser.new_context()
         page = context.new_page()
