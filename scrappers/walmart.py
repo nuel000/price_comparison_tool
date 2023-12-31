@@ -1,5 +1,6 @@
+import subprocess
 from playwright.sync_api import Playwright, sync_playwright
-from pyppeteer import launch
+subprocess.run(["playwright", "install"])
 
 
 from bs4 import BeautifulSoup
@@ -22,8 +23,7 @@ def run_playwright(search_term):
 
 
     with sync_playwright() as playwright:
-        
-        browser = playwright.chromium.launch(headless = True)
+        browser = playwright.chromium.launch(headless = False)
         context = browser.new_context()
         page = context.new_page()
         page.set_default_timeout(100000)
@@ -85,6 +85,9 @@ def run_playwright(search_term):
         browser.close()
         
         return data_list
+
+# data = run_playwright('Kirkland Minoxidil')
+# print(data)
 
 
 

@@ -14,8 +14,9 @@ def search_view(request):
                 keyword = form.cleaned_data['keyword']
 
                 with ThreadPoolExecutor(max_workers=2) as executor:
-                    ebay_future = executor.submit(ebay_run_playwright, keyword)
                     walmart_future = executor.submit(walmart_run_playwright, keyword)
+                    ebay_future = executor.submit(ebay_run_playwright, keyword)
+                    
 
                 # Get the results from both futures
                 try:
